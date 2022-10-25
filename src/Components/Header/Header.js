@@ -2,11 +2,17 @@ import React from 'react';
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
-import NavDropdown from 'react-bootstrap/NavDropdown';
+import { Link } from 'react-router-dom';
+import './Header.css'
+
 import img from '../../images/nav-logo.png'
+import { useContext } from 'react';
+import { AuthContext } from '../../Contexts/AuthProvider/AuthProvider';
+import { Image } from 'react-bootstrap';
 
 
 const Header = () => {
+    const {user} = useContext(AuthContext)
     return (
         <div>
             <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
@@ -24,15 +30,22 @@ const Header = () => {
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
          
-          <Nav className="ms-auto">
-           
-            <Nav.Link href="#features">Courses</Nav.Link>
-            <Nav.Link href="#pricing">FAQ</Nav.Link>
-            <Nav.Link href="#pricing">Blog</Nav.Link>
-            <Nav.Link eventKey={2} href="#memes">
-              login
-            </Nav.Link>
+          <Nav className="ms-auto nav">
+            <Link href="#features">Courses</Link>
+            <Link href="#pricing">FAQ</Link>
+            <Link to="/register">Blog</Link>
+            <Link to="/login">login</Link>
+            <Link to="/login">{user?.displayName}</Link>
+            <Link>
+            {user?.photoURL ? 
+            <Image style={{height:'30px'}} roundedCircle src={user.photoURL}></Image>
+            :<p>null</p>
+            }
+            </Link>
+            
+
           </Nav>
+          
         </Navbar.Collapse>
       </Container>
     </Navbar>
